@@ -2,13 +2,12 @@ import os
 import magic
 from models.file_model import FileModel
 
+
 def classify_file_type(file_path):
     """
     Classifing a file into categories based on its MIME type.
     """
     file_class = FileModel()
-    # if not file_path:
-    #     return 'Unknown'
     
     mime = magic.Magic(mime=True)
     try:
@@ -63,13 +62,13 @@ def classify_file_permissions(file_path):
     file_class = FileModel()
     file_permissions = {}
     report = {}
-    file_class.file_permissions = os.stat(file_path).st_mode
-    
+    file_class.file_permissions = os.lstat(file_path).st_mode
+
     # Check for world-writable files
     if file_class.file_permissions & 0o002:
         report[file_path] = "🖊️  World-writable file"
     # Check for setuid/setgid files
-    if file_class.file_permissions > 0o100777:
+    if file_class.file_permissions > 0o100777 and file_class.file_permissions < 0o116100:
         report[file_path] = "🚨 Setuid/setgid/sticky bit"
     # Check for files with no permissions
     if file_class.file_permissions == 0o100000:
@@ -78,29 +77,3 @@ def classify_file_permissions(file_path):
     file_permissions[file_path] = oct(file_class.file_permissions)
 
     return file_permissions, report
-
-
-def traverse_directory(directory):
-    """
-    Traversing through a directory recursively and classify files.
-    """
-    return_files = []
-    report_list = []
-
-    for root, _, files in os.walk(directory):
-        for file in files:
-
-            file_class = FileModel()
-
-            file_class.file_path = os.path.join(root, file)
-            file_class.file_category = classify_file_type(file_class.file_path)
-            file_class.file_size = os.path.getsize(file_class.file_path) / 1000000
-            file_class.file_permissions, report = classify_file_permissions(file_class.file_path)
-
-            # Append suspicious permission
-            if report:
-                report_list.append(report)
-
-            return_files.append(file_class)
-
-    return return_files, report_list
