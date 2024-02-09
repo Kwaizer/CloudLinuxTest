@@ -21,20 +21,20 @@ def traverse_directory(directory):
     report_list_files = []
     report_list_dirs = []
 
-    pool = Pool()  # Create a multiprocessing pool
+    pool = Pool()  
 
     for root, dirs, files in os.walk(directory):
-        # Append inaccessible directories
+        # Appending inaccessible directories
         for d in dirs:
             dir_path = os.path.join(root, d)
             if not os.access(dir_path, os.R_OK):
                 report_list_dirs.append(dir_path)
 
-        # Process files using multiprocessing pool
+        # Processing files using multiprocessing pool
         file_paths = [os.path.join(root, file) for file in files]
         results = pool.map(process_file, file_paths)
 
-        # Unpack the results
+        # Unpacking the results
         for result, report in results:
             return_files.append(result)
             if report:

@@ -9,14 +9,14 @@ last = '└── '
 
 
 def tree(dir_path: Path, prefix: str = ''):
-    """A recursive generator, given a directory Path object
-    will yield a visual tree structure line by line
-    with each line prefixed by the same characters
+    """
+    A recursive generator, 
+    given a directory Path object will yield a visual tree structure line by line
     """
     try:
         contents = list(dir_path.iterdir())
     except:
-        contents = list(Path("Permission denied").iterdir())
+        return
     # contents each get pointers that are ├── with a final └── :
     pointers = [tee] * (len(contents) - 1) + [last]
     for pointer, path in zip(pointers, contents):
@@ -26,3 +26,8 @@ def tree(dir_path: Path, prefix: str = ''):
             extension = branch if pointer == tee else space
             # i.e. space because last, └── , above so no more |
             yield from tree(path, prefix=prefix+extension)
+
+
+def display(dir):
+    for line in tree(Path.home() / dir):
+            print(line)
