@@ -46,4 +46,7 @@ and
 ```
 pip install python-magic
 ```
-but all dependencies can be already found in `requirements.txt`.
+but all dependencies can be already found in `requirements.txt` and installed with thr next command:
+```
+pip install -r requirements.txt
+```
