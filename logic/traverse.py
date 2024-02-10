@@ -1,9 +1,9 @@
-from multiprocessing import Pool
 import os
+from multiprocessing import Pool
+from models.file_model import FileModel
 from logic.classify_file import classify_file_permissions, classify_file_type
 from reports.gen_rep_ctg import generate_report_file_categories
 from reports.gen_rep_permisions import generate_report_permissions
-from models.file_model import FileModel
 from reports.gen_rep_thr import generate_report_large_files
 
 
