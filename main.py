@@ -17,6 +17,8 @@ or
 python main.py "/home/kwaizer/Desktop/folder2"
 or
 python main.py "/home/kwaizer/CloudLinux/test"
+or
+python main.py "/home/kwaizer/CloudLinux/test/test_folder" --rep --thr 1 --ctg --dsp
 """
 @app.command()
 def perform(dir: str, 
