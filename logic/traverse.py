@@ -1,5 +1,5 @@
 import os
-from multiprocessing import Pool
+import concurrent.futures
 from models.file_model import FileModel
 from logic.classify_file import classify_file_permissions, classify_file_type
 from reports.gen_rep_ctg import generate_report_file_categories
@@ -9,6 +9,9 @@ from reports.gen_rep_thr import generate_report_large_files
 
 def process_file(file_path):
     file_category = classify_file_type(file_path)
+    if file_category == 'Not accessed':
+        report = {file_path : f"Can't access a file. Possibly broken symlink or denied access"}
+        return FileModel(file_path, file_category), report
     file_size = os.lstat(file_path).st_size / 1000000
     file_permissions, report = classify_file_permissions(file_path)
     return FileModel(file_path, file_category, file_size, file_permissions), report
@@ -21,7 +24,7 @@ def traverse_directory(directory):
     report_list_files = []
     report_list_dirs = []
 
-    pool = Pool()  
+    file_paths = []
 
     for root, dirs, files in os.walk(directory):
         # Appending inaccessible directories
@@ -30,18 +33,20 @@ def traverse_directory(directory):
             if not os.access(dir_path, os.R_OK):
                 report_list_dirs.append(dir_path)
 
-        # Processing files using multiprocessing pool
-        file_paths = [os.path.join(root, file) for file in files]
-        results = pool.map(process_file, file_paths)
+        # Collecting file paths for processing
+        file_paths.extend([os.path.join(root, file) for file in files])
 
-        # Unpacking the results
-        for result, report in results:
-            return_files.append(result)
-            if report:
-                report_list_files.append(report)
-
-    pool.close()
-    pool.join()
+    # Using ThreadPoolExecutor for concurrent I/O-bound operations
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Processing files in batches
+        batch_size = 100  
+        for i in range(0, len(file_paths), batch_size):
+            batch_files = file_paths[i:i + batch_size]
+            results = list(executor.map(process_file, batch_files))
+            for result, report in results:
+                return_files.append(result)
+                if report:
+                    report_list_files.append(report)
 
     return return_files, report_list_dirs, report_list_files
 
