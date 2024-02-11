@@ -11,6 +11,7 @@ def classify_file_type(file_path):
     
     mime = magic.Magic(mime=True)
     try:
+        print(file_path)
         file_category = mime.from_file(file_path)
     except:
         file_class.file_category = 'Not accessed'

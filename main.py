@@ -4,22 +4,10 @@ from typing import Optional
 from display import display
 from logic.traverse import get_info
 
+
 app = typer.Typer()
-"""
-python main.py "/home/kwaizer/Downloads/Telegram Desktop"
-or
-python main.py "/home/kwaizer/Downloads/Telegram Desktop" --thr 50 --ctg --rep
-or
-python main.py "/home/kwaizer/Desktop" --thr 1
-or 
-python main.py "/home/kwaizer/Desktop/folder"
-or
-python main.py "/home/kwaizer/Desktop/folder2"
-or
-python main.py "/home/kwaizer/CloudLinux/test"
-or
-python main.py "/home/kwaizer/CloudLinux/test/test_folder" --rep --thr 1 --ctg --dsp
-"""
+
+
 @app.command()
 def perform(dir: str, 
             thr: Optional[int] = typer.Option(None, "--thr", help="Threshold value"),
