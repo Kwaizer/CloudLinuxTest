@@ -52,3 +52,4 @@ You can check program's reliability with tests by running this command in projec
 ```
 pytest -v
 ```
+Files from `test_folder` are used for mocking.
