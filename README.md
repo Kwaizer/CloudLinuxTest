@@ -42,7 +42,7 @@ The program itself mainly relies on 3 external libraries:
 - `typer` for CLI interface
 - `magic` for file type categorization.
 - `pytest` for testing.
-All dependencies can be already found in `requirements.txt` and installed with the next command:
+All dependencies can be already found in `requirements.txt` and installed with the next command:<br>
 ```
 pip install -r requirements.txt
 ```
