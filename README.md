@@ -41,7 +41,7 @@ python main.py "/home/<user>/Downloads/Telegram Desktop" --ctg --thr 50 --rep --
 The program itself mainly relies on 3 external libraries: 
 - `typer` for CLI interface
 - `magic` for file type categorization.
-- `pytest` for testing.
+- `pytest` for testing.<br>
 All dependencies can be already found in `requirements.txt` and installed with the next command:<br>
 ```
 pip install -r requirements.txt
