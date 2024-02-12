@@ -37,7 +37,22 @@ python main.py "/home/<user>/Downloads/Telegram Desktop" --ctg --thr 50 --rep
 ```
 python main.py "/home/<user>/Downloads/Telegram Desktop" --ctg --thr 50 --rep --dsp
 ```
-## Dependencies
+## How to install?
+To install this tool you can simply download an archive from GitHub or use this command:
+```
+git clone git@github.com:Kwaizer/CloudLinuxTest.git
+```
+After that you will need to install dependencies:
+```
+cd CloudLinuxTest
+```
+```
+python3 -m venv env
+```
+```
+source env/bin/activate
+```
+### Dependencies
 The program itself mainly relies on 3 external libraries: 
 - `typer` for CLI interface
 - `magic` for file type categorization.
@@ -47,6 +62,7 @@ All dependencies can be already found in `requirements.txt` and installed with t
 ```
 pip install -r requirements.txt
 ```
+After that you can test the program in your Linux file system by running example commands listed above (don't forget to replace `<user>` with a particular user of the system)
 ## Testing
 You can check program's reliability with tests by running this command in project's directory:
 ```
