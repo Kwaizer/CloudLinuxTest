@@ -38,7 +38,7 @@ python main.py "/home/<user>/Downloads/Telegram Desktop" --ctg --thr 50 --rep
 python main.py "/home/<user>/Downloads/Telegram Desktop" --ctg --thr 50 --rep --dsp
 ```
 ## How to install?
-To install this tool you can simply download an archive from GitHub or use this command:
+To install this tool you can simply download an archive from GitHub (the name will be `CloudLinuxTest-main` in this case) or use this command:
 ```
 git clone git@github.com:Kwaizer/CloudLinuxTest.git
 ```
